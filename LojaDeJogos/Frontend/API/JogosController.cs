@@ -20,13 +20,13 @@ namespace LojaDeJogos.Frontend.API
         // GET: api/Jogos
         public IHttpActionResult GetJogos()
         {
-            var resultado = db.Jogos.Select(Jogos => new
-                {
-                    Jogos.Preco,
-                    Jogos.Nome,
-                    Jogos.Capa,
-                    Jogos.Descricao
-                }).ToList();
+            var resultado = db.Jogos.Select(jogos => new
+            {
+                jogos.ID,
+                jogos.Nome,
+                jogos.Capa,
+                jogos.Descricao
+            }).ToList();
 
             return Ok(resultado);
         }
@@ -40,10 +40,9 @@ namespace LojaDeJogos.Frontend.API
             {
                 return NotFound();
             }
-
             var resultado = new
             {
-                jogos.Preco,
+                jogos.ID,
                 jogos.Nome,
                 jogos.Capa,
                 jogos.Descricao

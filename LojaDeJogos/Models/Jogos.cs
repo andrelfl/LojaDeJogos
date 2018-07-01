@@ -27,7 +27,5 @@ namespace lojaJogos.Models {
         public virtual ICollection<Media> ListaDeMedia { get; set; }
 
         public virtual ICollection<Compra> ListaDeCompras { get; set; }
-
-
     }
 }

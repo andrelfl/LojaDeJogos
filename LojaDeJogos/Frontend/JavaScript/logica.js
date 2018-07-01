@@ -18,21 +18,19 @@ function ecraCategorias() {
 function mostraCategorias(categorias) {
     for (var i = 0; i < categorias.length; i++) {
         var categ = document.createElement("div");
-        console.log(categorias.ListaDeJogos);
-        categ.appendChild(document.createTextNode(categorias[i].Nome + " - "));
+        categ.appendChild(document.createTextNode(categorias[i].Nome));
         categ.id = categorias[i].id;
         categ.addEventListener("click", function () {
             trocarEcraPil(this.id);
         });
         document.querySelector("#ListaCateg").appendChild(categ);
-        //ecraCatImg(categorias[i].id);
     }
 }
 
 //Mostrar imagens fornecendo um ID
-function ecraCatImg(id) {
+function ecraCatImg(capa) {
     var img = document.createElement("img");
-    img.src = getImg(id);
+    img.src = "~/"+capa;
     img.style.height = "50%";
     img.style.width = "50%";
     document.querySelector("#ListaCateg").appendChild(img);
@@ -40,15 +38,15 @@ function ecraCatImg(id) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////Pilotos
-function mostraPilotos(id) {
-    return getPilotos(id)
-        .then(function (pilotos) {
+function mostraJogos(id) {
+    return getJogos(id)
+        .then(function (jogos) {
             backToCat();
-            for (var i = 0; i < pilotos.length; i++) {
+            for (var i = 0; i < jogos.length; i++) {
                 var pil = document.createElement("div");
-                pil.appendChild(document.createTextNode(pilotos[i].name + " - " + pilotos[i].nationality));
+                pil.appendChild(document.createTextNode(jogos[i].nome + " - " + jogos[i].capa));
                 document.querySelector("#ListaPil").appendChild(pil);
-                ecraPilImg(pilotos[i].id);
+                ecraPilImg(jogos[i].id);
             }
         })
         .catch(function (erro) {
@@ -91,12 +89,9 @@ function mostraDetPilotos(id) {
         .then(function (dets) {
             document.querySelector("#Nome").appendChild(document.createTextNode(dets.name));
             document.querySelector("#Alcunha").appendChild(document.createTextNode(dets.nickname));
-            //document.querySelector("#Fotografia").appendChild(document.createTextNode(dets.name));
             document.querySelector("#DataNascFal").appendChild(document.createTextNode("Data Nascimento: " + dets.birth_date + " Data Falecimento: " + dets.death_date));
-            //document.querySelector("#Campeonato").appendChild(document.createTextNode(dets.name));
             document.querySelector("#Biografia").appendChild(document.createTextNode(dets.introduction));
-            //document.querySelector("#Carreira").appendChild(document.createTextNode(dets.name));
-            //document.querySelector("#MultPil").appendChild(document.createTextNode(dets.name));
+
         })
         .catch(function (erro) {
             console.error(erro);
@@ -110,6 +105,3 @@ function ecraPilDetImg(idPil, idImg) {
     img.style.width = "25%";
     document.querySelector("#MultPil").appendChild(img);
 }
-
-
-

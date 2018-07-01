@@ -208,6 +208,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Frontend\API\CategoriasController.cs" />
     <Compile Include="Frontend\API\JogosController.cs" />
+    <Compile Include="Frontend\API\MediaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

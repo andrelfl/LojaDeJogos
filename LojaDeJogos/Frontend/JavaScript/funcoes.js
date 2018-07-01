@@ -11,8 +11,8 @@
         });
 }
 
-function getPilotos(id) {
-    var url = "http://ipt-ti2-racinglegends-api.eu-gb.mybluemix.net/api/v1/categories/" + id + "/drivers";
+function getJogos(id) {
+    var url = "/api/jogos?id="+id;
                
     return fetch(url, { headers: { Accept: 'application/json' } })
         .then(function (resposta) {

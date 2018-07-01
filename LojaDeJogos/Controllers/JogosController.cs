@@ -137,18 +137,9 @@ namespace LojaDeJogos.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Jogos jogos = db.Jogos.Find(id);
-
-            try
-            {
-                db.Jogos.Remove(jogos);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                ModelState.AddModelError("", string.Format("Nao e possivel apagar o jogo"));
-            }
-            return View(jogos);
+            db.Jogos.Remove(jogos);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -13,55 +13,54 @@ using lojaJogos.Models;
 
 namespace LojaDeJogos.Frontend.API
 {
-    public class CategoriasController : ApiController
+    public class MediaController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Categorias
-        public IHttpActionResult GetCategorias()
+        // GET: api/Media
+        public IHttpActionResult GetMedia()
         {
-            var resultado = db.Categoria.Select(categorias => new
+            var resultado = db.Media.Select(media => new
             {
-                categorias.ID,
-                categorias.Nome
+                media.ID,
+                media.Fotografia
             }).ToList();
 
             return Ok(resultado);
         }
 
-        // GET: api/Categorias/5
-        [ResponseType(typeof(Categorias))]
-        public IHttpActionResult GetCategorias(int id)
+        // GET: api/Media/5
+        [ResponseType(typeof(Media))]
+        public IHttpActionResult GetMedia(int id)
         {
-            Categorias categorias = db.Categoria.Find(id);
-            if (categorias == null)
+            Media media = db.Media.Find(id);
+            if (media == null)
             {
                 return NotFound();
             }
             var resultado = new
             {
-                categorias.ID,
-                categorias.Nome
+                media.ID,
+                media.Fotografia
             };
-
             return Ok(resultado);
         }
 
-        // PUT: api/Categorias/5
+        // PUT: api/Media/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCategorias(int id, Categorias categorias)
+        public IHttpActionResult PutMedia(int id, Media media)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != categorias.ID)
+            if (id != media.ID)
             {
                 return BadRequest();
             }
 
-            db.Entry(categorias).State = EntityState.Modified;
+            db.Entry(media).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +68,7 @@ namespace LojaDeJogos.Frontend.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoriasExists(id))
+                if (!MediaExists(id))
                 {
                     return NotFound();
                 }
@@ -82,35 +81,35 @@ namespace LojaDeJogos.Frontend.API
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Categorias
-        [ResponseType(typeof(Categorias))]
-        public IHttpActionResult PostCategorias(Categorias categorias)
+        // POST: api/Media
+        [ResponseType(typeof(Media))]
+        public IHttpActionResult PostMedia(Media media)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Categoria.Add(categorias);
+            db.Media.Add(media);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = categorias.ID }, categorias);
+            return CreatedAtRoute("DefaultApi", new { id = media.ID }, media);
         }
 
-        // DELETE: api/Categorias/5
-        [ResponseType(typeof(Categorias))]
-        public IHttpActionResult DeleteCategorias(int id)
+        // DELETE: api/Media/5
+        [ResponseType(typeof(Media))]
+        public IHttpActionResult DeleteMedia(int id)
         {
-            Categorias categorias = db.Categoria.Find(id);
-            if (categorias == null)
+            Media media = db.Media.Find(id);
+            if (media == null)
             {
                 return NotFound();
             }
 
-            db.Categoria.Remove(categorias);
+            db.Media.Remove(media);
             db.SaveChanges();
 
-            return Ok(categorias);
+            return Ok(media);
         }
 
         protected override void Dispose(bool disposing)
@@ -122,9 +121,9 @@ namespace LojaDeJogos.Frontend.API
             base.Dispose(disposing);
         }
 
-        private bool CategoriasExists(int id)
+        private bool MediaExists(int id)
         {
-            return db.Categoria.Count(e => e.ID == id) > 0;
+            return db.Media.Count(e => e.ID == id) > 0;
         }
     }
 }
