@@ -1,0 +1,39 @@
+﻿@model lojaJogos.Models.Jogos
+
+@{
+    ViewBag.Title = "Details";
+}
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<div>
+    <div align="center">
+        <h1>@Html.DisplayFor(model => model.Nome)</h1>
+        <img src="~/media/@Html.DisplayFor(model => model.Capa)" />
+    </div>
+
+    <hr />
+
+    <div>
+        <h2 align="center">Media</h2>
+        <div class="row" style="overflow-x:auto;height:220px; white-space:nowrap">
+            @foreach (var item in Model.ListaDeMedia)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-6" style="display:inline-block; float:none">
+                    <img src="~/media/@item.Fotografia" style="height:200px" />
+                </div>
+            }
+        </div>
+    </div>
+
+    <hr />
+    <div align="center">
+        <button type="button" onclick=alert("Efetuado"); class="btn btn-success btn-lg">@Html.DisplayFor(model => model.Preco)€</button>
+    </div>
+</div>
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
