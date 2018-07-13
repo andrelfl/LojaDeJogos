@@ -28,16 +28,18 @@ function mostraCategorias(categorias) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////Jogos
-function mostraJogos(id) {
-    return getJogosCat(id)
-        .then(function (jogos) {
-            backToCat();
-            for (var i = 0; i < jogos.length; i++) {
-                var pil = document.createElement("div");
-                pil.appendChild(document.createTextNode(jogos[i].nome + " - " + jogos[i].capa));
-                document.querySelector("#ListaPil").appendChild(pil);
-                ecraPilImg(jogos[i].id);
-            }
+function mostraJogosDet(id) {
+    return getJogDet(id)
+        .then(function (jogo) {
+            backToList();
+
+            var img = document.createElement("img");
+            img.src = "/media/" + jogo.Capa;
+
+            document.querySelector("#Nome").appendChild(document.createTextNode(jogo.Nome));
+            document.querySelector("#Fotografia").appendChild(img);
+            document.querySelector("#Detalhes").appendChild(document.createTextNode(jogo.Descricao));
+            
         })
         .catch(function (erro) {
             console.error(erro);
@@ -55,11 +57,8 @@ function trocarEcraJog(id) {
 
 function trocarEcraDet(id) {
     document.querySelector("#ListaJogos").style = "display: none;";
-    document.querySelector("#ListaJogos").style = "display:;";
-    document.querySelector("#Nome").style = "display: none;";
-    document.querySelector("#Fotografia").style = "display: none;";
-    document.querySelector("#Detalhes").style = "display: none;";
-    //mostraJogosDet(id);
+    document.querySelector("#DetJog").style = "display:;";
+    mostraJogosDet(id);
 }
 
 function backToCat() {
@@ -69,6 +68,18 @@ function backToCat() {
     btn.addEventListener("click", function () {
         document.querySelector("#ListaCateg").style = "display:;";
         document.querySelector("#ListaJogos").innerHTML = "";
+    });
+}
+
+function backToList() {
+    var btn = document.createElement("BUTTON");
+    btn.appendChild(document.createTextNode("Back"));
+    document.querySelector("#Nome").appendChild(btn);
+    btn.addEventListener("click", function () {
+        document.querySelector("#ListaJogos").style = "display:;";
+        document.querySelector("#Nome").innerHTML = "";
+        document.querySelector("#Fotografia").innerHTML = "";
+        document.querySelector("#Detalhes").innerHTML = "";
     });
 }
 
