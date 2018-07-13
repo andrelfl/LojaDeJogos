@@ -38,10 +38,22 @@ namespace LojaDeJogos.Frontend.API
             {
                 return NotFound();
             }
+            var jogosAux = categorias.ListaDeJogos.ToArray();
+            List <Object> jogos = new List<Object>();
+            for (int i = 0; i < jogosAux.Length; i++) {
+                List<String> list = new List<String>();
+                list.Add(jogosAux[i].Nome);
+                list.Add(jogosAux[i].ID+"");
+                list.Add(jogosAux[i].Capa);
+                list.Add(jogosAux[i].Descricao);
+                jogos.Add(list);
+            }
+
             var resultado = new
             {
                 categorias.ID,
-                categorias.Nome
+                categorias.Nome,
+                jogos
             };
 
             return Ok(resultado);

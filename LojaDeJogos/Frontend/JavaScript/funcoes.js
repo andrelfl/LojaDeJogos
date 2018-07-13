@@ -11,15 +11,15 @@
         });
 }
 
-function getJogos(id) {
-    var url = "/api/jogos?id="+id;
+function getJogosCat(id) {
+    var url = "/api/Categorias/" + id;
                
     return fetch(url, { headers: { Accept: 'application/json' } })
         .then(function (resposta) {
             if (resposta.status === 200) {
                 return resposta.json();
             } else {
-                return Promise.reject(new Error("Erro ao obter pilotos"));
+                return Promise.reject(new Error("Erro ao obter Jogos"));
             }
         });
 }
@@ -28,12 +28,12 @@ function getImg(id) {
     return "http://ipt-ti2-racinglegends-api.eu-gb.mybluemix.net/api/v1/categories/"+ id +"/image";
 }
 
-function getPilImg(id) {
+function getJogImg(id) {
     return "http://ipt-ti2-racinglegends-api.eu-gb.mybluemix.net/api/v1/drivers/" + id + "/image";
 }
 
-function getPilDet(id) {
-    var url = "http://ipt-ti2-racinglegends-api.eu-gb.mybluemix.net/api/v1/drivers/" + id;
+function getJogDet(id) {
+    var url = "/api/jogos/" + id;
 
     return fetch(url, { headers: { Accept: 'application/json' } })
         .then(function (resposta) {

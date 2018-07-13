@@ -1,6 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', function main() { 
     ecraCategorias();
-    //mostraDetPilotos("colinmcrae");
 });
 
 ////Categorias
@@ -14,32 +13,23 @@ function ecraCategorias() {
         });
 }
 
-//Percorrer e mostrar todas as descricoes e imagens
+//Percorrer e mostrar todas as categorias
 function mostraCategorias(categorias) {
     for (var i = 0; i < categorias.length; i++) {
         var categ = document.createElement("div");
         categ.appendChild(document.createTextNode(categorias[i].Nome));
-        categ.id = categorias[i].id;
+        categ.id = categorias[i].ID;
         categ.addEventListener("click", function () {
-            trocarEcraPil(this.id);
+            trocarEcraJog(this.id);
         });
         document.querySelector("#ListaCateg").appendChild(categ);
     }
 }
 
-//Mostrar imagens fornecendo um ID
-function ecraCatImg(capa) {
-    var img = document.createElement("img");
-    img.src = "~/"+capa;
-    img.style.height = "50%";
-    img.style.width = "50%";
-    document.querySelector("#ListaCateg").appendChild(img);
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////Pilotos
+////Jogos
 function mostraJogos(id) {
-    return getJogos(id)
+    return getJogosCat(id)
         .then(function (jogos) {
             backToCat();
             for (var i = 0; i < jogos.length; i++) {
@@ -54,54 +44,61 @@ function mostraJogos(id) {
         });
 }
 
-function ecraPilImg(id) {
-    var img = document.createElement("img");
-    img.src = getPilImg(id);
-    img.style.height = "25%";
-    img.style.width = "25%";
-    document.querySelector("#ListaPil").appendChild(img);
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////Mudar ecra
 
-function trocarEcraPil(id) {
+function trocarEcraJog(id) {
     document.querySelector("#ListaCateg").style = "display: none;";
-    document.querySelector("#ListaPil").style = "display:;";
-    mostraPilotos(id);
+    document.querySelector("#ListaJogos").style = "display:;";
+    mostraJogos(id);
+}
+
+function trocarEcraDet(id) {
+    document.querySelector("#ListaJogos").style = "display: none;";
+    document.querySelector("#ListaJogos").style = "display:;";
+    document.querySelector("#Nome").style = "display: none;";
+    document.querySelector("#Fotografia").style = "display: none;";
+    document.querySelector("#Detalhes").style = "display: none;";
+    //mostraJogosDet(id);
 }
 
 function backToCat() {
     var btn = document.createElement("BUTTON");
     btn.appendChild(document.createTextNode("Back"));
-    document.querySelector("#ListaPil").appendChild(btn);
+    document.querySelector("#ListaJogos").appendChild(btn);
     btn.addEventListener("click", function () {
         document.querySelector("#ListaCateg").style = "display:;";
-        document.querySelector("#ListaPil").innerHTML = "";
+        document.querySelector("#ListaJogos").innerHTML = "";
     });
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///DetalhesPilotos
+///ListaJogos
 
-function mostraDetPilotos(id) {
-    return getPilDet(id)
-        .then(function (dets) {
-            document.querySelector("#Nome").appendChild(document.createTextNode(dets.name));
-            document.querySelector("#Alcunha").appendChild(document.createTextNode(dets.nickname));
-            document.querySelector("#DataNascFal").appendChild(document.createTextNode("Data Nascimento: " + dets.birth_date + " Data Falecimento: " + dets.death_date));
-            document.querySelector("#Biografia").appendChild(document.createTextNode(dets.introduction));
+function mostraJogos(id) {
+    return getJogosCat(id)
+        .then(function (listJog) {
+            backToCat();
+            var i = 0;
+            for (i = 0; i < listJog.jogos.length; i++) {
+                var Jnome = document.createElement("div");
+                Jnome.appendChild(document.createTextNode(listJog.jogos[i][0]));
+                Jnome.id = listJog.jogos[i][1];
+                Jnome.addEventListener("click", function () {
+                    trocarEcraDet(this.id);
+                });
 
+                var img = document.createElement("img");
+                img.src = "/media/" + listJog.jogos[i][2];
+
+                var JCapa = document.createElement("div");
+                JCapa.appendChild(img);
+
+                document.querySelector("#ListaJogos").appendChild(Jnome);
+                document.querySelector("#ListaJogos").appendChild(JCapa);
+            }   
         })
         .catch(function (erro) {
             console.error(erro);
         });
-}
-
-function ecraPilDetImg(idPil, idImg) {
-    var img = document.createElement("img");
-    img.src = getPilDetImg(idPil, idImg);
-    img.style.height = "25%";
-    img.style.width = "25%";
-    document.querySelector("#MultPil").appendChild(img);
 }
