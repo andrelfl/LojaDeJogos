@@ -55,6 +55,7 @@ namespace LojaDeJogos.Frontend.API
                 jogos.Nome,
                 jogos.Capa,
                 jogos.Descricao,
+                jogos.Preco,
                 listaMedia
             };
             return Ok(resultado);

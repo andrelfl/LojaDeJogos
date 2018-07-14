@@ -1,2 +1,18 @@
-﻿body {
+﻿#Fotografia {
+    text-align: center;
+}
+#Detalhes {
+    width: 1000px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    text-align: center;
+    margin-left: 13%;
+    margin-right: 13%;
+}
+#Nome {
+    text-align: center;
+}
+#Back {
+    text-align: left;
 }

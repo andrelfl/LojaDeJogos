@@ -36,18 +36,30 @@ function mostraJogosDet(id) {
             var img = document.createElement("img");
             img.src = "/media/" + jogo.Capa;
 
-            document.querySelector("#Nome").appendChild(document.createTextNode(jogo.Nome));
+            var h1 = document.createElement("h1");
+            h1.appendChild(document.createTextNode(jogo.Nome));
+            document.querySelector("#Nome").appendChild(h1);
             document.querySelector("#Fotografia").appendChild(img);
             document.querySelector("#Detalhes").appendChild(document.createTextNode(jogo.Descricao));
 
+            var divO = document.createElement("div");
+            divO.class = "row";
+            divO.style = "overflow-x:auto;height:220px; white-space:nowrap";
+            divO.id = "divO";
 
             for (var i = 0; i < jogo.listaMedia.length; i++){
-                console.log(jogo.listaMedia[i][1]);
+                var divI = document.createElement("div");
+                divI.id = "divI";
+                divI.class = "col-lg-4 col-md-4 col-sm-6";
+                divI.style = "display:inline-block; float:none";
                 var img = document.createElement("img");
                 img.src = "/media/" + jogo.listaMedia[i][1];
-                document.querySelector("#Media").appendChild(img);
+                img.style = "height:200px";
+                divI.appendChild(img);
+                divO.appendChild(divI);
             }
-            
+
+            document.querySelector("#Media").appendChild(divO); 
         })
         .catch(function (erro) {
             console.error(erro);
@@ -72,7 +84,10 @@ function trocarEcraDet(id) {
 function backToCat() {
     var btn = document.createElement("BUTTON");
     btn.appendChild(document.createTextNode("Back"));
-    document.querySelector("#ListaJogos").appendChild(btn);
+    btn.class = "btn btn-info";
+    var div = document.createElement("div");
+    div.appendChild(btn);
+    document.querySelector("#ListaJogos").appendChild(div);
     btn.addEventListener("click", function () {
         document.querySelector("#ListaCateg").style = "display:;";
         document.querySelector("#ListaJogos").innerHTML = "";
@@ -82,7 +97,11 @@ function backToCat() {
 function backToList() {
     var btn = document.createElement("BUTTON");
     btn.appendChild(document.createTextNode("Back"));
-    document.querySelector("#Nome").appendChild(btn);
+    btn.class = "btn btn-info";
+    var div = document.createElement("div");
+    div.id = "Back";
+    div.appendChild(btn);
+    document.querySelector("#Nome").appendChild(div);
     btn.addEventListener("click", function () {
         document.querySelector("#ListaJogos").style = "display:;";
         document.querySelector("#Nome").innerHTML = "";
