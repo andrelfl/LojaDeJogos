@@ -25,7 +25,7 @@ namespace LojaDeJogos.Frontend.API
                 jogos.ID,
                 jogos.Nome,
                 jogos.Capa,
-                jogos.Descricao,
+                jogos.Descricao
             }).ToList();
 
             return Ok(resultado);
@@ -40,12 +40,22 @@ namespace LojaDeJogos.Frontend.API
             {
                 return NotFound();
             }
+            var jogosAux = jogos.ListaDeMedia.ToArray();
+            List<Object> listaMedia = new List<Object>();
+            for (int i = 0; i < jogosAux.Length; i++)
+            {
+                List<String> list = new List<String>();
+                list.Add(jogosAux[i].ID + "");
+                list.Add(jogosAux[i].Fotografia);
+                listaMedia.Add(list);
+            }
             var resultado = new
             {
                 jogos.ID,
                 jogos.Nome,
                 jogos.Capa,
-                jogos.Descricao
+                jogos.Descricao,
+                listaMedia
             };
             return Ok(resultado);
         }

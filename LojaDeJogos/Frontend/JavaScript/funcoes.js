@@ -24,14 +24,6 @@ function getJogosCat(id) {
         });
 }
 
-function getImg(id) {
-    return "http://ipt-ti2-racinglegends-api.eu-gb.mybluemix.net/api/v1/categories/"+ id +"/image";
-}
-
-function getJogImg(id) {
-    return "http://ipt-ti2-racinglegends-api.eu-gb.mybluemix.net/api/v1/drivers/" + id + "/image";
-}
-
 function getJogDet(id) {
     var url = "/api/jogos/" + id;
 
@@ -43,8 +35,4 @@ function getJogDet(id) {
                 return Promise.reject(new Error("Erro ao obter detalhes"));
             }
         });
-}
-
-function getPilDetImg(idPil, idImg) {
-    return "http://ipt-ti2-racinglegends-api.eu-gb.mybluemix.net/api/v1/drivers/" + idPil + "/multimedia/images/" + idImg + "/image";
 }

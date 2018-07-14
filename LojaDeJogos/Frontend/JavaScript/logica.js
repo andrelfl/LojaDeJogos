@@ -39,6 +39,14 @@ function mostraJogosDet(id) {
             document.querySelector("#Nome").appendChild(document.createTextNode(jogo.Nome));
             document.querySelector("#Fotografia").appendChild(img);
             document.querySelector("#Detalhes").appendChild(document.createTextNode(jogo.Descricao));
+
+
+            for (var i = 0; i < jogo.listaMedia.length; i++){
+                console.log(jogo.listaMedia[i][1]);
+                var img = document.createElement("img");
+                img.src = "/media/" + jogo.listaMedia[i][1];
+                document.querySelector("#Media").appendChild(img);
+            }
             
         })
         .catch(function (erro) {
@@ -80,6 +88,7 @@ function backToList() {
         document.querySelector("#Nome").innerHTML = "";
         document.querySelector("#Fotografia").innerHTML = "";
         document.querySelector("#Detalhes").innerHTML = "";
+        document.querySelector("#Media").innerHTML = "";
     });
 }
 
