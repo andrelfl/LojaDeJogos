@@ -15,6 +15,13 @@ function ecraCategorias() {
 
 //Percorrer e mostrar todas as categorias
 function mostraCategorias(categorias) {
+    var divT = document.createElement("div");
+    var tit = document.createElement("h1");
+    tit.appendChild(document.createTextNode("Loja de videojogos"));
+    divT.appendChild(tit);
+    divT.id = "Tit";
+    document.querySelector("#ListaCateg").appendChild(divT);
+
     var div = document.createElement("div");
     div.id = "Cards";
     div.className = "card-columns";
