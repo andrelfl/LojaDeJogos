@@ -36,12 +36,13 @@
         </dd>
     </dl>
 
-    @using (Html.BeginForm()){
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
         <div class="form-actions no-color">
             <input type="submit" value="Apagar" class="btn btn-danger" /> |
             @Html.ActionLink("Regresso ao início", "Index")
-         </div>
-     }
+        </div>
+    }
 
 </div>
