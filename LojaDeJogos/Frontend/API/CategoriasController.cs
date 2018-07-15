@@ -23,7 +23,8 @@ namespace LojaDeJogos.Frontend.API
             var resultado = db.Categoria.Select(categorias => new
             {
                 categorias.ID,
-                categorias.Nome
+                categorias.Nome,
+                categorias.Descricao
             }).ToList();
 
             return Ok(resultado);
@@ -54,6 +55,7 @@ namespace LojaDeJogos.Frontend.API
             {
                 categorias.ID,
                 categorias.Nome,
+                categorias.Descricao,
                 jogos
             };
 

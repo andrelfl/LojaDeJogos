@@ -15,15 +15,36 @@ function ecraCategorias() {
 
 //Percorrer e mostrar todas as categorias
 function mostraCategorias(categorias) {
+    var div = document.createElement("div");
+    div.id = "Cards";
+    div.className = "card-columns";
     for (var i = 0; i < categorias.length; i++) {
-        var categ = document.createElement("div");
-        categ.appendChild(document.createTextNode(categorias[i].Nome));
-        categ.id = categorias[i].ID;
-        categ.addEventListener("click", function () {
+        var card = document.createElement("div");
+        var cardB = document.createElement("div");
+        card.className = "card";
+        card.style = "width: 400px;";
+        cardB.className = "card-body";
+
+        var title = document.createElement("h5");
+        title.className = "card-title";
+        title.appendChild(document.createTextNode(categorias[i].Nome));
+        title.id = categorias[i].ID;
+        title.addEventListener("click", function () {
             trocarEcraJog(this.id);
         });
-        document.querySelector("#ListaCateg").appendChild(categ);
+
+        var desc = document.createElement("p");
+        desc.className = "card-text";
+        desc.appendChild(document.createTextNode(categorias[i].Descricao));
+
+        cardB.appendChild(title);
+        cardB.appendChild(desc);
+
+        card.appendChild(cardB);
+
+        div.appendChild(card);
     }
+    document.querySelector("#ListaCateg").appendChild(div);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,8 +105,9 @@ function trocarEcraDet(id) {
 function backToCat() {
     var btn = document.createElement("BUTTON");
     btn.appendChild(document.createTextNode("Back"));
-    btn.class = "btn btn-info";
+    btn.className = "btn btn-info";
     var div = document.createElement("div");
+    div.style = "margin-left: 25px; margin-top: 10px;";
     div.appendChild(btn);
     document.querySelector("#ListaJogos").appendChild(div);
     btn.addEventListener("click", function () {
@@ -97,9 +119,10 @@ function backToCat() {
 function backToList() {
     var btn = document.createElement("BUTTON");
     btn.appendChild(document.createTextNode("Back"));
-    btn.class = "btn btn-info";
+    btn.className = "btn btn-info";
     var div = document.createElement("div");
     div.id = "Back";
+    div.style = "margin-left: 25px; margin-top: 10px;";
     div.appendChild(btn);
     document.querySelector("#Nome").appendChild(div);
     btn.addEventListener("click", function () {

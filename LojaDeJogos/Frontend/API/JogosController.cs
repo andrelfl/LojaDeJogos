@@ -25,7 +25,8 @@ namespace LojaDeJogos.Frontend.API
                 jogos.ID,
                 jogos.Nome,
                 jogos.Capa,
-                jogos.Descricao
+                jogos.Descricao,
+                jogos.Preco
             }).ToList();
 
             return Ok(resultado);

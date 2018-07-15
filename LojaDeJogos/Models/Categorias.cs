@@ -14,6 +14,8 @@ namespace lojaJogos.Models {
 
         public string Nome { get; set; }
 
+        public string Descricao { get; set; }
+
         public virtual ICollection<Jogos> ListaDeJogos { get; set; }
 
     }
