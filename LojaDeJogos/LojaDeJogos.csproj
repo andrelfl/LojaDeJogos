@@ -219,6 +219,7 @@
     <Compile Include="Models\Compra.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Jogos.cs" />
+    <Compile Include="Models\JogosDB.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

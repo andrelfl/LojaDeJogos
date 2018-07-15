@@ -134,12 +134,28 @@ namespace LojaDeJogos.Controllers
         // POST: Jogos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Jogos jogos = db.Jogos.Find(id);
+        public ActionResult DeleteConfirmed(int id){
+            /*Jogos jogos = db.Jogos.Find(id);
             db.Jogos.Remove(jogos);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");*/
+
+            Jogos jogos = db.Jogos.Find(id);
+            
+            try{
+                // remover da memória
+                db.Jogos.Remove(jogos);
+                // commit na BD
+                db.SaveChanges();
+                // redirecionar para a página inicial
+                return RedirectToAction("Index");
+            }catch (Exception){
+                // gerar uma mensagem de erro, a ser apresentada ao utilizador
+                ModelState.AddModelError(
+                "",string.Format("Não foi possível remover o Jogo '{0}', porque existem {1} categorias associadas a ele.", jogos.Nome, jogos.ListaDeCategorias.ToArray().Length));
+            }
+                // reenviar os dados para a View
+                return View(jogos);
         }
 
         protected override void Dispose(bool disposing)
