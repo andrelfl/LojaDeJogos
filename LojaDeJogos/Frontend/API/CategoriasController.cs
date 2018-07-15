@@ -46,6 +46,7 @@ namespace LojaDeJogos.Frontend.API
                 list.Add(jogosAux[i].ID+"");
                 list.Add(jogosAux[i].Capa);
                 list.Add(jogosAux[i].Descricao);
+                list.Add(jogosAux[i].Preco+"");
                 jogos.Add(list);
             }
 

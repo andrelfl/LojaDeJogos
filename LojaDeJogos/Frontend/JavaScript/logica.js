@@ -119,23 +119,44 @@ function mostraJogos(id) {
         .then(function (listJog) {
             backToCat();
             var i = 0;
+            var div = document.createElement("div");
+            div.id = "Cards";
+            div.className = "card-columns";
             for (i = 0; i < listJog.jogos.length; i++) {
-                var Jnome = document.createElement("div");
-                Jnome.appendChild(document.createTextNode(listJog.jogos[i][0]));
-                Jnome.id = listJog.jogos[i][1];
-                Jnome.addEventListener("click", function () {
+                var card = document.createElement("div");
+                var cardB = document.createElement("div");
+                card.className = "card";
+                card.style = "width: 400px;";
+                cardB.className = "card-body";
+
+                var title = document.createElement("h5");
+                title.className = "card-title";
+                title.appendChild(document.createTextNode(listJog.jogos[i][0]));
+                title.id = listJog.jogos[i][1];
+
+                var desc = document.createElement("p");
+                desc.className = "card-text";
+                desc.appendChild(document.createTextNode(listJog.jogos[i][4] + " €"));
+
+                cardB.appendChild(title);
+                cardB.appendChild(desc);
+
+                ///
+                title.addEventListener("click", function () {
                     trocarEcraDet(this.id);
                 });
+                ////
 
                 var img = document.createElement("img");
                 img.src = "/media/" + listJog.jogos[i][2];
+                img.className = "card-img-top";
 
-                var JCapa = document.createElement("div");
-                JCapa.appendChild(img);
+                card.appendChild(img);
+                card.appendChild(cardB);
 
-                document.querySelector("#ListaJogos").appendChild(Jnome);
-                document.querySelector("#ListaJogos").appendChild(JCapa);
-            }   
+                div.appendChild(card);
+            }
+            document.querySelector("#ListaJogos").appendChild(div);
         })
         .catch(function (erro) {
             console.error(erro);
