@@ -9,8 +9,6 @@ namespace lojaJogos.Models {
 
         public string Fotografia { get; set; }
 
-        public string tipo { get; set; }
-
         [ForeignKey("Jogos")]
         public int JogosFK { get; set; }
 

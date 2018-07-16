@@ -37,6 +37,7 @@ namespace LojaDeJogos.Controllers
         }
 
         // GET: Clientes/Create
+        [Authorize(Roles = "Admin")] //Se o utilizador tiver o role de "Admin" pode entrar no "create"
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace LojaDeJogos.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Nome,Email,DataNascimento")] Cliente cliente)
         {
@@ -60,6 +62,7 @@ namespace LojaDeJogos.Controllers
         }
 
         // GET: Clientes/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +81,7 @@ namespace LojaDeJogos.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Nome,Email,DataNascimento")] Cliente cliente)
         {
@@ -91,6 +95,7 @@ namespace LojaDeJogos.Controllers
         }
 
         // GET: Clientes/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,6 +111,7 @@ namespace LojaDeJogos.Controllers
         }
 
         // POST: Clientes/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -21,6 +21,7 @@ namespace lojaJogos.Models {
 
         public string Capa { get; set; }
 
+        [DataType(DataType.MultilineText, ErrorMessage = "Email inválido")]
         public string Descricao { get; set; }
 
         public virtual ICollection<Categorias> ListaDeCategorias { get; set; }

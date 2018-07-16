@@ -16,7 +16,7 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-   
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.Capa, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -37,7 +37,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Preco, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <input type="text" name="precoLong" style="color:blue;" accept=".jpg" />
+            <input class="form-control text-box single-line"type="text" name="precoLong" accept=".jpg" />
             @Html.ValidationMessageFor(model => model.Preco, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -47,6 +47,20 @@
         <div class="col-md-10">
             @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ListaDeCategorias, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("LCateg", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ListaDeCategorias, "", new { @class = "text-danger" })
+
+            @Html.DropDownList("LCateg", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ListaDeCategorias, "", new { @class = "text-danger" })
+
+            @Html.DropDownList("LCateg", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ListaDeCategorias, "", new { @class = "text-danger" })
         </div>
     </div>
 

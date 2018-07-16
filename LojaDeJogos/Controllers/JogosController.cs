@@ -19,6 +19,7 @@ namespace LojaDeJogos.Controllers
         // GET: Jogos
         public ActionResult Index()
         {
+            //Ordena a lista de jogos por nome
             var listaJogos = db.Jogos.ToList().OrderBy(a => a.Nome);
             
             return View(listaJogos);
@@ -42,8 +43,11 @@ namespace LojaDeJogos.Controllers
         }
 
         // GET: Jogos/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            //Criacao da select list para poder editar a lista de categorias de um jogo, ao ser criado
+            ViewBag.LCateg = new SelectList(db.Categoria, "ID", "Nome");
             return View();
         }
 
@@ -51,10 +55,21 @@ namespace LojaDeJogos.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Nome,Preco,Descricao")] Jogos jogos, HttpPostedFileBase fileUpload, String precoLong)
         {
+            //Guardar o id de cada categoria para uso posterior
+            string idCat = Request.Form["LCateg"].ToString();
+            int idCat1 = idCat[0] - '0';
+            int idCat2 = idCat[2] - '0';
+            int idCat3 = idCat[4] - '0';
+            //Buscar as categorias atraves do id
+            Categorias categ1 = db.Categoria.Where(a => a.ID == idCat1).Single();
+            Categorias categ2 = db.Categoria.Where(a => a.ID == idCat2).Single();
+            Categorias categ3 = db.Categoria.Where(a => a.ID == idCat3).Single();
 
+            //Cast da string passado como parametro no metodo para double, para poder ser usado no jogo
             jogos.Preco = Double.Parse(precoLong);
 
             int novoID = 0;
@@ -87,6 +102,9 @@ namespace LojaDeJogos.Controllers
             if (ModelState.IsValid) { 
                 try{
                     db.Jogos.Add(jogos);
+                    jogos.ListaDeCategorias.Add(categ1);
+                    jogos.ListaDeCategorias.Add(categ2);
+                    jogos.ListaDeCategorias.Add(categ3);
                     db.SaveChanges();
                     fileUpload.SaveAs(imgPath);
                     return RedirectToAction("Index");
@@ -100,8 +118,10 @@ namespace LojaDeJogos.Controllers
         }
 
         // GET: Jogos/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -134,6 +154,8 @@ namespace LojaDeJogos.Controllers
                 return View(jogos);
             }
 
+
+
             if (ModelState.IsValid)
             {
                 db.Jogos.Add(jogos);
@@ -145,9 +167,10 @@ namespace LojaDeJogos.Controllers
             return View(jogos);  
         }
 
-        
+
 
         // GET: Jogos/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
