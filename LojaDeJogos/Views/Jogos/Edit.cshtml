@@ -18,14 +18,6 @@
         @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ListaDeCategorias, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input class="form-control text-box single-line valid" type="text">
-                @Html.ValidationMessageFor(model => model.ListaDeCategorias, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Capa, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="fileUpload" style="color:blue;" accept=".jpg" />
@@ -44,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Preco, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control text-box single-line valid" type="number">
+                <input type="text" name="precoLong" style="color:blue;" accept=".jpg" />
                 @Html.ValidationMessageFor(model => model.Preco, "", new { @class = "text-danger" })
             </div>
         </div>

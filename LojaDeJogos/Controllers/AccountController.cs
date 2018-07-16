@@ -79,7 +79,7 @@ namespace LojaDeJogos.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Jogos");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -164,7 +164,7 @@ namespace LojaDeJogos.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     UserManager.AddToRole(user.Id, "User");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Jogos");
                 }
                 AddErrors(result);
             }
@@ -393,7 +393,7 @@ namespace LojaDeJogos.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Jogos");
         }
 
         //

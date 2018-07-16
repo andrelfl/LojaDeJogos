@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace lojaJogos.Models {
     public class Jogos {
@@ -16,7 +17,7 @@ namespace lojaJogos.Models {
 
         public string Nome { get; set; }
 
-        public decimal Preco { get; set; }
+        public double Preco { get; set; }
 
         public string Capa { get; set; }
 

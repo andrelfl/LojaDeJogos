@@ -48,15 +48,22 @@ namespace LojaDeJogos.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nome,Preco,Descricao")] Jogos jogos, HttpPostedFileBase fileUpload)
+        public ActionResult Create([Bind(Include = "ID,Nome,Preco,Descricao")] Jogos jogos, HttpPostedFileBase fileUpload, String precoLong)
         {
-            string imgPath = Path.Combine(Server.MapPath("~/media/"), jogos.Nome + ".jpg");
+            jogos.Preco = Double.Parse(precoLong);
 
-            jogos.Capa = jogos.Nome + ".jpg";
+            int novoID = db.Jogos.Max(a => a.ID) + 1;
+            jogos.ID = novoID;
 
-            if (fileUpload == null)
+            string imgPath = Path.Combine(Server.MapPath("~/media/"), "Jogo_" + novoID + ".jpg");
+
+            jogos.Capa = "Jogo_" + novoID + ".jpg";
+
+            if (fileUpload != null)
             {
-                ModelState.AddModelError("", "Image not provided");
+                jogos.Capa = "Jogo_" + novoID + ".jpg";
+            }else{
+                ModelState.AddModelError("", "Não foi fornecida uma imagem..."); // gera MSG de erro
                 return View(jogos);
             }
 
@@ -91,11 +98,13 @@ namespace LojaDeJogos.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,Preco,Descricao")] Jogos jogos, HttpPostedFileBase fileUpload)
+        public ActionResult Edit([Bind(Include = "ID,Nome,Preco,Descricao")] Jogos jogos, HttpPostedFileBase fileUpload, String precoLong)
         {
-            string imgPath = Path.Combine(Server.MapPath("~/media/"), jogos.Nome + ".jpg");
+            jogos.Preco = Double.Parse(precoLong);
 
-            jogos.Capa = jogos.Nome + ".jpg";
+            string imgPath = Path.Combine(Server.MapPath("~/media/"), "Jogo_" + jogos.ID + ".jpg");
+
+            jogos.Capa = "Jogo_" + jogos.ID + ".jpg";
 
             if(fileUpload == null)
             {
@@ -121,12 +130,12 @@ namespace LojaDeJogos.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Jogos jogos = db.Jogos.Find(id);
             if (jogos == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(jogos);
         }
@@ -135,10 +144,6 @@ namespace LojaDeJogos.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id){
-            /*Jogos jogos = db.Jogos.Find(id);
-            db.Jogos.Remove(jogos);
-            db.SaveChanges();
-            return RedirectToAction("Index");*/
 
             Jogos jogos = db.Jogos.Find(id);
             
@@ -152,7 +157,7 @@ namespace LojaDeJogos.Controllers
             }catch (Exception){
                 // gerar uma mensagem de erro, a ser apresentada ao utilizador
                 ModelState.AddModelError(
-                "",string.Format("Não foi possível remover o Jogo '{0}', porque existem {1} categorias associadas a ele.", jogos.Nome, jogos.ListaDeCategorias.ToArray().Length));
+                "",string.Format("Não foi possível remover o Jogo '{0}', porque existem {1} categorias associadas a ele.", jogos.Nome, jogos.ListaDeCategorias.Count));
             }
                 // reenviar os dados para a View
                 return View(jogos);
