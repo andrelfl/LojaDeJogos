@@ -9,7 +9,7 @@
 <p>
     @if (User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Criar cliente", "Create")
     }
     </p>
 <table class="table">
@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataNascimento)
+            Data de nascimento
         </th>
         <th></th>
     </tr>
@@ -40,10 +40,12 @@
         <td>
             @if (User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID })             
-                @Html.ActionLink("Details", "Details", new { id = item.ID })       
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            }
+                <p>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Detalhes", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Apagar", "Delete", new { id = item.ID })
+                </p>
+             }
             </td>
     </tr>
 }

@@ -1,7 +1,7 @@
 ﻿@model lojaJogos.Models.Jogos
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes";
 }
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <div>
@@ -36,7 +36,7 @@
 @if (User.IsInRole("Admin"))
 {
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Voltar à lista", "Index")
     </p>
 }

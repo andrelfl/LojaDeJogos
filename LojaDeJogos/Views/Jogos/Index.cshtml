@@ -9,7 +9,7 @@
 
     @if (User.IsInRole("Admin")) {
         <p>
-            @Html.ActionLink("Create New", "Create")
+            @Html.ActionLink("Criar novo jogo", "Create")
         </p>
     }
 
@@ -76,8 +76,8 @@
         <td>
             @if (User.IsInRole("Admin")){
                 <p>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ID })|
+                    @Html.ActionLink("Apagar", "Delete", new { id = item.ID })|
                 </p>
              }
         </td>
