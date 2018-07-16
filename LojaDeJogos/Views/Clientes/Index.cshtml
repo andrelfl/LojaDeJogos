@@ -1,0 +1,51 @@
+﻿@model IEnumerable<lojaJogos.Models.Cliente>
+
+@{
+    ViewBag.Title = "Lista de clientes";
+}
+
+<h2>Lista de clientes</h2>
+
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+    </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataNascimento)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataNascimento)
+        </td>
+        <td>
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID })             
+                @Html.ActionLink("Details", "Details", new { id = item.ID })       
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            }
+            </td>
+    </tr>
+}
+
+</table>

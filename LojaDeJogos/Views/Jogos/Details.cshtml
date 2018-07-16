@@ -25,9 +25,12 @@
     </div>
 
     <hr />
-    <div align="center">
-        <button type="button" onclick=alert("Efetuado"); class="btn btn-success btn-lg">@Html.DisplayFor(model => model.Preco)€</button>
-    </div>
+
+    @if (User.IsInRole("User")) { 
+        <div align="center">
+            <button type="button" onclick=alert("Efetuado"); class="btn btn-success btn-lg">@Html.DisplayFor(model => model.Preco)€</button>
+        </div>
+    }
 </div>
 
 @if (User.IsInRole("Admin"))

@@ -19,7 +19,9 @@ namespace LojaDeJogos.Controllers
         // GET: Jogos
         public ActionResult Index()
         {
-            return View(db.Jogos.ToList());
+            var listaJogos = db.Jogos.ToList().OrderBy(a => a.Nome);
+            
+            return View(listaJogos);
         }
 
         // GET: Jogos/Details/5
@@ -27,12 +29,14 @@ namespace LojaDeJogos.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                // ou não foi introduzido um ID válido,
+                // ou foi introduzido um valor completamente errado
+                return RedirectToAction("Index");
             }
             Jogos jogos = db.Jogos.Find(id);
             if (jogos == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(jogos);
         }
@@ -50,9 +54,22 @@ namespace LojaDeJogos.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Nome,Preco,Descricao")] Jogos jogos, HttpPostedFileBase fileUpload, String precoLong)
         {
+
             jogos.Preco = Double.Parse(precoLong);
 
-            int novoID = db.Jogos.Max(a => a.ID) + 1;
+            int novoID = 0;
+
+            // *****************************************
+            // proteger a geração de um novo ID
+            // *****************************************
+            // determinar o nº de Agentes na tabela
+
+            if (db.Jogos.Count() == 0){
+                novoID = 1;
+            }else{
+                novoID = db.Jogos.Max(a => a.ID) + 1;
+            }
+
             jogos.ID = novoID;
 
             string imgPath = Path.Combine(Server.MapPath("~/media/"), "Jogo_" + novoID + ".jpg");
@@ -67,12 +84,16 @@ namespace LojaDeJogos.Controllers
                 return View(jogos);
             }
 
-            if (ModelState.IsValid)
-            {
-                db.Jogos.Add(jogos);
-                db.SaveChanges();
-                fileUpload.SaveAs(imgPath);
-                return RedirectToAction("Index"); 
+            if (ModelState.IsValid) { 
+                try{
+                    db.Jogos.Add(jogos);
+                    db.SaveChanges();
+                    fileUpload.SaveAs(imgPath);
+                    return RedirectToAction("Index");
+                }catch{
+                    // gerar uma mensagem de erro para o utilizador
+                    ModelState.AddModelError("", "Ocorreu um erro não determinado na criação de um novo jogo...");
+                }
             }
 
             return View(jogos);
@@ -88,7 +109,7 @@ namespace LojaDeJogos.Controllers
             Jogos jogos = db.Jogos.Find(id);
             if (jogos == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(jogos);
         }
@@ -97,6 +118,7 @@ namespace LojaDeJogos.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Nome,Preco,Descricao")] Jogos jogos, HttpPostedFileBase fileUpload, String precoLong)
         {
@@ -142,14 +164,15 @@ namespace LojaDeJogos.Controllers
 
         // POST: Jogos/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id){
 
             Jogos jogos = db.Jogos.Find(id);
-            
+
             try{
-                // remover da memória
-                db.Jogos.Remove(jogos);
+            // remover da memória
+            db.Jogos.Remove(jogos);
                 // commit na BD
                 db.SaveChanges();
                 // redirecionar para a página inicial
@@ -157,7 +180,7 @@ namespace LojaDeJogos.Controllers
             }catch (Exception){
                 // gerar uma mensagem de erro, a ser apresentada ao utilizador
                 ModelState.AddModelError(
-                "",string.Format("Não foi possível remover o Jogo '{0}', porque existem {1} categorias associadas a ele.", jogos.Nome, jogos.ListaDeCategorias.Count));
+                "",string.Format("Não foi possível remover o Jogo '{0}', porque existem categorias associadas a ele.", jogos.Nome));
             }
                 // reenviar os dados para a View
                 return View(jogos);

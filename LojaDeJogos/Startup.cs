@@ -49,6 +49,7 @@ namespace LojaDeJogos
             if (chkUser.Succeeded)
             {
                 var result1 = userManager.AddToRole(user.Id, "Admin");
+                result1 = userManager.AddToRole(user.Id, "User");
             }
 
             // criar "User"

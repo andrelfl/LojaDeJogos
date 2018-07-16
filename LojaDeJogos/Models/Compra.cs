@@ -13,8 +13,6 @@ namespace lojaJogos.Models {
         [Key]
         public int ID { get; set; }
 
-        public string chave { get; set; }
-
         public virtual ICollection<Jogos> ListaDeJogos { get; set; }
 
         [ForeignKey("Cliente")]
